@@ -127,16 +127,15 @@ class LabelTool():
             self.parent.focus()
             self.category = int(s)
         else:
-            s = r'D:\workspace\python\labelGUI'
-##        if not os.path.isdir(s):
-##            tkMessageBox.showerror("Error!", message = "The specified dir doesn't exist!")
-##            return
+            if not os.path.isdir(s):
+                tkMessageBox.showerror("Error!", message = "The specified dir doesn't exist!")
+                return
         # get image list
         self.imageDir = os.path.join(r'./Images', '%03d' %(self.category))
-        self.imageList = glob.glob(os.path.join(self.imageDir, '*.jpg'))
+        self.imageList = glob.glob(os.path.join(self.imageDir, '*.JPEG'))
         self.imageList.sort()  # By Tomonori12
         if len(self.imageList) == 0:
-            print('No .JPEG images found in the specified dir!')  # By Tomonori12
+            print('No JPEG images found in the specified dir!')  # By Tomonori12
             return
 
         # default to the 1st image in the collection
@@ -151,8 +150,9 @@ class LabelTool():
         # load example bboxes
         self.egDir = os.path.join(r'./Examples', '%03d' %(self.category))
         if not os.path.exists(self.egDir):
+            print("no corresponding examples found")
             return
-        filelist = glob.glob(os.path.join(self.egDir, '*.jpg'))
+        filelist = glob.glob(os.path.join(self.egDir, '*.JPEG'))
         self.tmp = []
         self.egList = []
         random.shuffle(filelist)
